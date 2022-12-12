@@ -1,0 +1,53 @@
+.app_container {
+  margin: 20px auto;
+  width: 90%;
+  height: 100vh;
+  text-align: center;
+  .row {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    margin: 16px;
+    .data_name {
+      display: flex;
+      justify-content: flex-start;
+      flex: 0.1;
+    }
+    .data_price {
+      display: flex;
+      flex: 0.1;
+      justify-content: center;
+    }
+  }
+  .derivetive_container {
+    .title_wrapper {
+      display: flex;
+      align-items: center;
+      h1 {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+      }
+      .back_btn {
+        display: flex;
+        justify-content: flex-start;
+      }
+    }
+    .row {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      margin: 16px;
+      .data_name {
+        display: flex;
+        justify-content: flex-start;
+        flex: 0.2;
+      }
+      .data_price {
+        display: flex;
+        flex: 0.1;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
