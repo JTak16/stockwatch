@@ -48,7 +48,7 @@ const Derivetives = () => {
           return (
             <div className="row" key={item.token}>
               <div className="data_name">{item.symbol}</div>
-              <div className="data_price">{item.token}</div>
+              <div className="data_price">{item?.price}</div>
             </div>
           );
         })}

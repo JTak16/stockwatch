@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import store from '../Store';
 var socket = new WebSocket("wss://prototype.sbulltech.com/api/ws");
 
 export const Websocket = () => {
@@ -33,7 +34,7 @@ export const Websocket = () => {
   };
 
   socket.onclose = (e) => {
-    let date = new Date()
+    let date = new Date();
     console.log(
         'disconnected',
         date.getHours() +
@@ -61,17 +62,15 @@ export const sendData = (data) => {
 
 
 const UpdatederivativesData = (e) =>{
-  const derivativeData = useSelector(
-    (state) => state?.derivetiveData?.derivetiveData
-  );
-  const dispatch = useDispatch();
+  const derivativeData = store?.getState().derivetiveData?.derivetiveData;
   let mainData = derivativeData.map((item) => {
     if(e.payload.token === item.token){
       item['price'] = e.payload.price;
     }
+    //item['price'] = 999999999999;
     return item;
   });
-  dispatch({
+  store.dispatch({
     type: "GET_DERIVETIVES_DATA",
     payload: mainData,
   });
