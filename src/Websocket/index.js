@@ -1,16 +1,50 @@
-let socket = new WebSocket("wss://prototype.sbulltech.com/api/ws");
-export const websocket = () => {
+import { useSelector, useDispatch } from "react-redux";
+var socket = new WebSocket("wss://prototype.sbulltech.com/api/ws");
+
+export const Websocket = () => {
   socket.onopen = (e) => {
+    let date = new Date()
+    console.log(
+        'connected',
+        date.getHours() +
+            ':' +
+            date.getMinutes() +
+            ':' +
+            date.getSeconds() +
+            ':' +
+            date.getMilliseconds()
+    )
     console.log("socket is open", e);
-    //open
   };
   socket.onmessage = (e) => {
+    let date = new Date()
+    console.log(
+        'on message',
+        date.getHours() +
+            ':' +
+            date.getMinutes() +
+            ':' +
+            date.getSeconds() +
+            ':' +
+            date.getMilliseconds()
+    )
     console.log("socket onmessage", e);
+    UpdatederivativesData(e);
   };
 
   socket.onclose = (e) => {
-    console.log("socket is close", e);
-    //closing
+    let date = new Date()
+    console.log(
+        'disconnected',
+        date.getHours() +
+            ':' +
+            date.getMinutes() +
+            ':' +
+            date.getSeconds() +
+            ':' +
+            date.getMilliseconds()
+    );
+    // socket=null;
   };
 
   socket.onerror = (error) => {
@@ -19,11 +53,26 @@ export const websocket = () => {
   };
 };
 export const sendData = (data) => {
-  console.log("socket is sending data", data);
-  // dummy data value = {
-  //   "msg_command":"subscribe",
-  //   "data_type":"quote",
-  //   "tokens":[5872172]
-  //  };
-  socket.send(data);
+  if(socket){
+    console.log("socket is sending data", socket);
+    socket.send(data);
+  } 
 };
+
+
+const UpdatederivativesData = (e) =>{
+  const derivativeData = useSelector(
+    (state) => state?.derivetiveData?.derivetiveData
+  );
+  const dispatch = useDispatch();
+  let mainData = derivativeData.map((item) => {
+    if(e.payload.token === item.token){
+      item['price'] = e.payload.price;
+    }
+    return item;
+  });
+  dispatch({
+    type: "GET_DERIVETIVES_DATA",
+    payload: mainData,
+  });
+}

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveCurrentUnderlying } from "../../Actions";
-import { sendData } from "../../Websocket";
 
 const Underlayings = () => {
   const navigate = useNavigate();
@@ -13,14 +12,19 @@ const Underlayings = () => {
   const _handleDerivetiveClick = (token, name) => {
     dispatch(saveCurrentUnderlying(token, name));
     navigate(`/derivetives/${name}`);
+    // sendData({
+    //   msg_command: "subscribe",
+    //   data_type: "quote",
+    //   tokens: [token]
+    // });
   };
 
   const getPrice = (tkn) => {
-    return sendData({
-      msg_command: "subscribe",
-      data_type: "quote",
-      tokens: [tkn],
-    });
+    // return sendData({
+    //   msg_command: "subscribe",
+    //   data_type: "quote",
+    //   tokens: [tkn],
+    // });
   };
   return (
     <>
